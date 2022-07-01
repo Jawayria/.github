@@ -1,0 +1,28 @@
+name: cleanup
+
+on:
+  workflow_dispatch:
+    inputs:
+      repos_list:
+        description: "List of repositories where you want to run the job"
+        type: string
+        required: true
+
+jobs:
+  split_list:
+
+  cleanup:
+    runs-on: ubuntu-20.04
+
+    strategy:
+      matrix:
+        repos: ${{github.event.inputs.repos_list}}
+
+
+    steps:
+      - uses: actions/checkout@v2
+          with:
+            name: ${{ matrix.repos }}
+
+      - name: print repo
+        run: echo ${{ github.repository }}
