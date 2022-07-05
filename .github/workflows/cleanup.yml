@@ -9,7 +9,6 @@ on:
         required: true
 
 jobs:
-  split_list:
 
   cleanup:
     runs-on: ubuntu-20.04
@@ -21,7 +20,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-          with:
+        with:
             name: ${{ matrix.repos }}
 
       - name: print repo
