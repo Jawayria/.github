@@ -10,12 +10,22 @@ on:
 
 jobs:
 
-  cleanup:
+  split_string:
     runs-on: ubuntu-20.04
 
+    outputs:
+      output1: ${{ steps.split_string.outputs.list }}
+    steps:
+    - name: get repos list
+      id: split_string
+      run: echo "::set-output name=list::'($(echo $string | tr "," "\n"))'"
+
+  cleanup:
+    runs-on: ubuntu-20.04
+    needs: split_string
     strategy:
       matrix:
-        repos: ${{github.event.inputs.repos_list}}
+        repos: ${{ needs.split_string.outputs.output1}}
 
 
     steps:
