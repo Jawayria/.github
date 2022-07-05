@@ -19,7 +19,7 @@ jobs:
     - name: get repos list
       id: split_string
       run: |
-        IFS=' ' read -a arr <<< "$line"
+        IFS=' ' read -a arr <<< "${{ github.events.inputs.repos_list }}"
         echo $arr
         
 
