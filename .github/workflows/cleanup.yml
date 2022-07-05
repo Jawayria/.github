@@ -1,0 +1,37 @@
+name: cleanup
+
+on:
+  workflow_dispatch:
+    inputs:
+      repos_list:
+        description: "List of repositories where you want to run the job"
+        type: string
+        required: true
+
+jobs:
+
+  split_string:
+    runs-on: ubuntu-20.04
+
+    outputs:
+      output1: ${{ steps.split_string.outputs.list }}
+    steps:
+    - name: get repos list
+      id: split_string
+      run: echo "::set-output name=list::'($(echo ${{ github.event.inputs.repos_list }} | tr "," "\n"))'"
+
+  cleanup:
+    runs-on: ubuntu-20.04
+    needs: split_string
+    strategy:
+      matrix:
+        repos: ${{ needs.split_string.outputs.output1}}
+
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+            name: ${{ matrix.repos }}
+
+      - name: print repo
+        run: echo ${{ github.repository }}
