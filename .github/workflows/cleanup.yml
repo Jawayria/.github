@@ -18,7 +18,7 @@ jobs:
     steps:
     - name: get repos list
       id: split_string
-      run: echo "::set-output name=version::$(python  split_string.py ${{ github.event.input.repos_list }})"
+      run: echo "::set-output name=version::$(cwd)"
 
   cleanup:
     runs-on: ubuntu-20.04
@@ -29,9 +29,9 @@ jobs:
 
 
     steps:
-      - uses: actions/checkout@v2
-        with:
-            name: ${{ matrix.repos }}
+  #    - uses: actions/checkout@v2
+  #      with:
+  #          name: ${{ matrix.repos }}
 
       - name: print repo
-        run: echo ${{ github.repository }}
+        run: echo ${{ matrix.repos }}
