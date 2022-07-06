@@ -38,7 +38,7 @@ jobs:
 
       - uses: actions/checkout@v2
         with:
-            name: ${{ matrix.repos }}
+            repository: ${{ matrix.repos }}
 
       - name: print repo
         run: pwd
