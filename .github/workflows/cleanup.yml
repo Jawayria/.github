@@ -18,10 +18,7 @@ jobs:
     steps:
     - name: get repos list
       id: split_string
-      run: |
-        IFS=',' read -a arr <<< "${{ github.event.inputs.repos_list }}"
-        echo $arr
-        
+      run: echo "::set-output name=version::$(python  split_string.py ${{ github.event.input.repos_list }})"
 
   cleanup:
     runs-on: ubuntu-20.04
