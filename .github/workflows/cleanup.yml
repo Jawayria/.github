@@ -32,8 +32,8 @@ jobs:
     needs: split_string
     strategy:
       matrix:
-        repos: ${{ needs.split_string.outputs.output1}}
-  #      repos: ['openedx/django-wiki', 'openedx/edx-ui-toolkit']
+  #      repos: ${{ needs.split_string.outputs.output1}}
+        repos: [ ${{ github.event.inputs.repos_list}}, ${{needs.split_string.outputs.output1}} ]
 
     steps:
       - name: print repo
