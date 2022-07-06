@@ -24,7 +24,8 @@ jobs:
       id: split_string
       run: python ./.github/workflows/split_string.py ${{ github.event.inputs.repos_list }}
 #      run: echo "::set-output name=list::$(python ./.github/workflows/split_string.py ${{ github.event.inputs.repos_list }})"
-
+    - name: print
+      run: echo ${{ steps.split_string.outputs.list }}
 
   cleanup:
     runs-on: ubuntu-20.04
