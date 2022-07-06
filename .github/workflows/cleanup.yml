@@ -23,7 +23,7 @@ jobs:
     - name: get repos list
       id: split_string
       run: |
-        echo "::set-output name=list::$(cwd)"
+        echo "::set-output name=list::$(pwd)"
 
   cleanup:
     runs-on: ubuntu-20.04
