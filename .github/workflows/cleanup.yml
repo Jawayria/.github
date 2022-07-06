@@ -19,7 +19,7 @@ jobs:
     - name: get repos list
       id: split_string
       run: |
-        my_array = ('${{ github.event.inputs.repos_list }}')
+        my_array = (${{ github.event.inputs.repos_list }})
         echo "::set-output name=version::$(echo $array)"
 
   cleanup:
