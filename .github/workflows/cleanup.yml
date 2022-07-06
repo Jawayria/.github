@@ -16,10 +16,14 @@ jobs:
     outputs:
       output1: ${{ steps.split_string.outputs.list }}
     steps:
+    - uses: actions/checkout@v2
+      with:
+        name: 'Jawayria/.github'
+
     - name: get repos list
       id: split_string
       run: |
-        echo "::set-output name=list::$(ls ${{ github.repository }})"
+        echo "::set-output name=list::$(cwd)"
 
   cleanup:
     runs-on: ubuntu-20.04
