@@ -24,7 +24,7 @@ jobs:
       id: split_string
       run: |
         IFS=',' read -ra ADDR <<< "ope,ere,ere,ttt"
-        echo "::set-output name=list::${ADDR[@]}"
+        echo "::set-output name=list::[${ADDR[@]}]"
     - name: print
       run: echo ${{ steps.split_string.outputs.list }}
 
