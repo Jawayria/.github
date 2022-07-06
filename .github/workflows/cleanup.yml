@@ -23,8 +23,8 @@ jobs:
     - name: get repos list
       id: split_string
       run: |
-
-        echo "::set-output name=list::$(IFS=',' read -ra ADDR <<< 'ope,ere,ere,ttt')"
+        IFS=',' read -ra ADDR <<< "ope,ere,ere,ttt"
+        echo "::set-output name=list::${ADDR[@]}"
     - name: print
       run: echo ${{ steps.split_string.outputs.list }}
 
