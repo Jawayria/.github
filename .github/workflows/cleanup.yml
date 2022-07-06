@@ -22,8 +22,9 @@ jobs:
 
     - name: get repos list
       id: split_string
-      run: python ./.github/workflows/split_string.py ${{ github.event.inputs.repos_list }}
-#      run: echo "::set-output name=list::$(python ./.github/workflows/split_string.py ${{ github.event.inputs.repos_list }})"
+      run: |
+        IFS=',' read -ra ADDR <<< "ope,ere,ere,ttt"
+        echo "::set-output name=list::$(echo ${ADDR[@]}) }})"
     - name: print
       run: echo ${{ steps.split_string.outputs.list }}
 
