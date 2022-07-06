@@ -10,30 +10,33 @@ on:
 
 jobs:
 
-  split_string:
-    runs-on: ubuntu-20.04
+#  split_string:
+#    runs-on: ubuntu-20.04
 
-    outputs:
-      output1: ${{ steps.split_string.outputs.list }}
-    steps:
-    - name: get repos list
-      id: split_string
-      run: |
-        my_array = (${{ github.event.inputs.repos_list }})
-        echo "::set-output name=version::$(echo $array)"
+#    outputs:
+#      output1: ${{ steps.split_string.outputs.list }}
+#    steps:
+#    - name: get repos list
+#      id: split_string
+#      run: |
+#        my_array = (${{ github.event.inputs.repos_list }})
+#        echo "::set-output name=version::$(echo $array)"
 
   cleanup:
     runs-on: ubuntu-20.04
-    needs: split_string
+#    needs: split_string
     strategy:
       matrix:
-        repos: ${{ needs.split_string.outputs.output1}}
-
+ #       repos: ${{ needs.split_string.outputs.output1}}
+        repos: ['openedx/django-wiki', 'openedx/edx-ui-toolkit']
 
     steps:
-  #    - uses: actions/checkout@v2
-  #      with:
-  #          name: ${{ matrix.repos }}
+      - name: print repo
+        run: echo ${{ github.repository }}
+
+      - uses: actions/checkout@v2
+        with:
+            name: ${{ matrix.repos }}
 
       - name: print repo
-        run: echo ${{ matrix.repos }}
+        run: echo ${{ github.repository }}
