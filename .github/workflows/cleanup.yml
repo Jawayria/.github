@@ -33,7 +33,7 @@ jobs:
     strategy:
       matrix:
   #      repos: ${{ needs.split_string.outputs.output1}}
-        repos: [ ${{ github.event.inputs.repos_list}}, ${{needs.split_string.outputs.output1}} ]
+        repos: [ ${{ github.event.inputs.repos_list}}, 'openedx/.github' ]
 
     steps:
       - name: print repo
