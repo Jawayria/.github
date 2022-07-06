@@ -16,25 +16,19 @@ jobs:
     outputs:
       output1: ${{ steps.split_string.outputs.list }}
     steps:
-    - uses: actions/checkout@v2
-      with:
-        name: 'Jawayria/.github'
 
     - name: get repos list
       id: split_string
       run: |
         IFS=',' read -ra ADDR <<< "ope,ere,ere,ttt"
         echo "::set-output name=list::[${{github.event.inputs.repos_list}}]"
-    - name: print
-      run: echo ${{ steps.split_string.outputs.list }}
 
   cleanup:
     runs-on: ubuntu-20.04
     needs: split_string
     strategy:
       matrix:
-        repos: ${{ needs.split_string.outputs.output1}}
-  #      repos: [ ${{ github.event.inputs.repos_list}}, 'openedx/.github' ]
+        repos: ${{fromJson(needs.split_string.outputs.output1)}}
 
     steps:
       - name: print repo
