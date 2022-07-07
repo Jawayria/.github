@@ -3,10 +3,20 @@ name: cleanup
 on:
   workflow_dispatch:
     inputs:
+      organization:
+        description: "Github organization for the listed repos"
+        type: string
+        required: false
+        default: openedx
       repos_list:
         description: "List of repositories where you want to run the job"
         type: string
         required: true
+      python_version:
+        description: "Python Version"
+        type: string
+        required: false
+        default: '3.8'
       script:
         description: "Script to execute on repos"
         type: string
@@ -34,15 +44,39 @@ jobs:
         repos: ${{fromJson(needs.split_string.outputs.output1)}}
 
     steps:
-      - name: print repo
-        run: echo ${{ github.repository }}
+#      - name: setup target branch
+#        run: echo "target_branch=$(if ['${{ inputs.branch }}' = '']; then echo 'master'; else echo '${{ inputs.branch }}'; fi)" >> $GITHUB_ENV
 
       - uses: actions/checkout@v2
         with:
-            repository: ${{ matrix.repos }}
+            repository: ${{ github.event.inputs.organization}}/${{ matrix.repos }}
+            ref: ${{ env.target_branch }}
 
-      - name: print repo
-        run: pwd
+      - name: setup python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ github.event.inputs.python_version }}
 
       - name: run script
         run: ${{ github.event.inputs.script }}
+
+#      - name: setup testeng-ci
+#        run: |
+#          git clone https://github.com/edx/testeng-ci.git
+#          cd $GITHUB_WORKSPACE/testeng-ci
+#          pip install -r requirements/base.txt
+
+#      - name: create pull request
+#        id: createpullrequest
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.requirements_bot_github_token }}
+#          GITHUB_USER_EMAIL: ${{ secrets.requirements_bot_github_email }}
+#        run: |
+#          cd $GITHUB_WORKSPACE/testeng-ci
+#          python -m jenkins.pull_request_creator --repo-root=$GITHUB_WORKSPACE \
+#          --target-branch="${{ env.target_branch }}" --base-branch-name="cleanup" \
+#          --commit-message="chore: Updating Python Requirements" --pr-title="Python Requirements Update" \
+#          --pr-body="Python requirements update. Please review the [changelogs](https://openedx.atlassian.net/wiki/spaces/TE/pages/1001521320/Python+Package+Changelogs) for the upgraded packages." \
+#          --user-reviewers="${{ inputs.user_reviewers }}" \
+#          --team-reviewers="${{ inputs.team_reviewers }}" \
+#          --delete-old-pull-requests --output-pr-url-for-github-action
