@@ -7,6 +7,10 @@ on:
         description: "List of repositories where you want to run the job"
         type: string
         required: true
+      script:
+        description: "Script to execute on repos"
+        type: string
+        required: true
 
 jobs:
 
@@ -21,9 +25,6 @@ jobs:
       id: split_string
       run: |
         echo "::set-output name=list::[${{github.event.inputs.repos_list}}]"
-
-    - name: print
-      run: echo ${{ steps.split_string.outputs.list }}
 
   cleanup:
     runs-on: ubuntu-20.04
@@ -42,3 +43,6 @@ jobs:
 
       - name: print repo
         run: pwd
+
+      - name: run script
+        run: ${{ github.event.inputs.script }}
