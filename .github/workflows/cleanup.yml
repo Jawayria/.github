@@ -69,8 +69,9 @@ jobs:
       - name: create pull request
         id: createpullrequest
         env:
+
           GITHUB_TOKEN: ${{ secrets.access_token }}
-          GITHUB_USER_EMAIL: "jawayriahashmi@gmail.com"
+          GITHUB_USER_EMAIL: jawayriahashmi@gmail.com
         run: |
           cd $GITHUB_WORKSPACE/testeng-ci
           python -m jenkins.pull_request_creator --repo-root=$GITHUB_WORKSPACE \
