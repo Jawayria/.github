@@ -106,21 +106,21 @@ jobs:
           cd $GITHUB_WORKSPACE/testeng-ci
           if ${{ github.event.inputs.draft }}
           then
-              draftflag="--draft"
+              echo "draftflag='--draft'" >> $GITHUB_ENV
           else
-              draftflag=""
+              echo "draftflag=''" >> $GITHUB_ENV
           fi
 
           if ${{ github.event.inputs.force_delete_old_prs}}
           then
-             force_delete_old_prs_flag="--force-delete-old-prs"
+             echo "force_delete_old_prs_flag='--force-delete-old-prs'" >> $GITHUB_ENV
           else
-             force_delete_old_prs_flag="--no-force-delete-old-prs"
+             echo "force_delete_old_prs_flag='--no-force-delete-old-prs'" >> $GITHUB_ENV
           fi
-          echo ${{ draftflag }}
+          echo ${{ env.draftflag }}
           python -m jenkins.pull_request_creator --repo-root=$GITHUB_WORKSPACE \
           --target-branch="master" --base-branch-name="${{ github.event.inputs.branch }}" \
           --commit-message="${{ github.event.inputs.commit_message }}" \
           --pr-title="${{ github.event.inputs.commit_message }}"  \
           --pr-body="${{ github.event.inputs.pr_body }}" \
-           ${{ force_delete_old_prs_flag }} ${{draftflag}} --untracked-files-required=true
+           ${{ env.force_delete_old_prs_flag }} ${{env.draftflag}} --untracked-files-required=true
