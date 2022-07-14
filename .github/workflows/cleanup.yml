@@ -58,7 +58,7 @@ jobs:
     runs-on: ubuntu-20.04
     needs: [ split_string ]
     strategy:
-      fails-fast: false
+      fail-fast: false
       matrix:
         repos: ${{fromJson(needs.split_string.outputs.output1)}}
 
