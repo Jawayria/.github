@@ -35,6 +35,16 @@ on:
         type: string
         required: false
         default: 'cleanup-python-code'
+      draft:
+        description: "Create draft PR"
+        type: boolean
+        required: false
+        default: false
+      force_delete_old_prs:
+        description: "Forcefully delete old PRs"
+        type: boolean
+        required: false
+        default: false
       script:
         description: "Script to execute on repos"
         type: string
@@ -93,9 +103,22 @@ jobs:
           GITHUB_USER_EMAIL: Jawayria
         run: |
           cd $GITHUB_WORKSPACE/testeng-ci
+          if ${{ github.event.inputs.draft }}
+          then
+              draftflag="--draft"
+          else
+              draftflag=""
+          fi
+
+          if ${{ github.event.inputs.force_delete_old_prs}}
+          then
+             force_delete_old_prs_flag="--force-delete-old-prs"
+          else
+             force_delete_old_prs_flag="--no-force-delete-old-prs"
+          fi
           python -m jenkins.pull_request_creator --repo-root=$GITHUB_WORKSPACE \
           --target-branch="master" --base-branch-name="${{ github.event.inputs.branch }}" \
           --commit-message="${{ github.event.inputs.commit_message }}" \
           --pr-title="${{ github.event.inputs.commit_message }}"  \
           --pr-body="${{ github.event.inputs.pr_body }}" \
-          --delete-old-pull-requests --output-pr-url-for-github-action
+           ${ force_delete_old_prs_flag } ${draftflag} --untracked-files-required=true
