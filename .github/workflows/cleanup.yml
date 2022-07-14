@@ -117,6 +117,7 @@ jobs:
           else
              force_delete_old_prs_flag="--no-force-delete-old-prs"
           fi
+          echo ${{ draftflag }}
           python -m jenkins.pull_request_creator --repo-root=$GITHUB_WORKSPACE \
           --target-branch="master" --base-branch-name="${{ github.event.inputs.branch }}" \
           --commit-message="${{ github.event.inputs.commit_message }}" \
