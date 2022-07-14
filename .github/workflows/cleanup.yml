@@ -21,6 +21,7 @@ on:
         description: "Space separated list of required packages"
         type: string
         required: false
+        default: ''
       commit_message:
         description: "Commit message/ PR title"
         type: string
