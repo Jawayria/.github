@@ -123,4 +123,4 @@ jobs:
           --commit-message="${{ github.event.inputs.commit_message }}" \
           --pr-title="${{ github.event.inputs.commit_message }}"  \
           --pr-body="${{ github.event.inputs.pr_body }}" \
-           ${{ env.force_delete_old_prs_flag }} ${{env.draftflag}} --untracked-files-required=true
+           ${{ env.force_delete_old_prs_flag }} ${{env.draftflag}}
