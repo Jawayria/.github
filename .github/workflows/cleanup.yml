@@ -85,7 +85,7 @@ jobs:
           python-version: ${{ github.event.inputs.python_version }}
 
       - name: install packages
-        if: ${{ github.event.inputs.packages }} != ''
+        if: ${{ github.event.inputs.packages }} != ${{ null }}
         run: pip install ${{ github.event.inputs.packages }}
 
       - name: run script
