@@ -62,13 +62,10 @@ jobs:
         repos: ${{fromJson(needs.split_string.outputs.output1)}}
 
     steps:
-      - name: setup target branch
-        run: echo "target_branch=$(if ['${{ inputs.branch }}' = '']; then echo 'master'; else echo '${{ inputs.branch }}'; fi)" >> $GITHUB_ENV
-
       - uses: actions/checkout@v2
         with:
             repository: ${{ github.event.inputs.organization}}/${{ matrix.repos }}
-            ref: ${{ env.target_branch }}
+            ref: 'master'
 
       - name: setup python
         uses: actions/setup-python@v2
