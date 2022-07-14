@@ -58,6 +58,7 @@ jobs:
     runs-on: ubuntu-20.04
     needs: [ split_string ]
     strategy:
+      fails-fast: false
       matrix:
         repos: ${{fromJson(needs.split_string.outputs.output1)}}
 
@@ -93,7 +94,7 @@ jobs:
         run: |
           cd $GITHUB_WORKSPACE/testeng-ci
           python -m jenkins.pull_request_creator --repo-root=$GITHUB_WORKSPACE \
-          --target-branch="${{ env.target_branch }}" --base-branch-name="${{ github.event.inputs.branch }}" \
+          --target-branch="master" --base-branch-name="${{ github.event.inputs.branch }}" \
           --commit-message="${{ github.event.inputs.commit_message }}" \
           --pr-title="${{ github.event.inputs.commit_message }}"  \
           --pr-body="${{ github.event.inputs.pr_body }}" \
