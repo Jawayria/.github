@@ -101,8 +101,7 @@ jobs:
         run: echo "draftflag=$(if ${{ github.event.inputs.draft }}; then echo '--draft'; else echo ''; fi)" >> $GITHUB_ENV
 
       - name: setup force delte flag
-        run: echo "force_delete_old_prs_flag=$(if ${{ github.event.inputs.force_delete_old_prs }}; \
-        then echo '--force-delete-old-prs'; else echo '--no-force-delete-old-prs'; fi)" >> $GITHUB_ENV
+        run: echo "force_delete_old_prs_flag=$(if ${{ github.event.inputs.force_delete_old_prs }}; then echo '--force-delete-old-prs'; else echo '--no-force-delete-old-prs'; fi)" >> $GITHUB_ENV
 
       - name: create pull request
         id: createpullrequest
