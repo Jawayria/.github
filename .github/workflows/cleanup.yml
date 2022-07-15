@@ -98,10 +98,10 @@ jobs:
           pip install -r requirements/base.txt
 
       - name: setup draft flag
-        run: echo "draftflag=$(if ['${{ github.event.inputs.draft }}' = 'true']; then echo '--draft'; else echo ''; fi)" >> $GITHUB_ENV
+        run: echo "draftflag=$(if ${{ github.event.inputs.draft }}; then echo '--draft'; else echo ''; fi)" >> $GITHUB_ENV
 
       - name: print draft flag
-        run: echo $${{ env.draftflag }}
+        run: echo ${{ env.draftflag }}
 
       - name: create pull request
         id: createpullrequest
