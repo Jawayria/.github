@@ -104,7 +104,7 @@ jobs:
           GITHUB_USER_EMAIL: Jawayria
         run: |
           cd $GITHUB_WORKSPACE/testeng-ci
-          echo "draftflag=$(if ['${{ inputs.draft }}']; then echo '--draft'; else echo ''; fi)" >> $GITHUB_ENV
+          echo "draftflag=$(if ${{ inputs.draft }}; then echo '--draft'; else echo ''; fi)" >> $GITHUB_ENV
 
           if ${{ github.event.inputs.force_delete_old_prs}}
           then
