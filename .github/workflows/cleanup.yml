@@ -100,8 +100,9 @@ jobs:
       - name: setup draft flag
         run: echo "draftflag=$(if ${{ github.event.inputs.draft }}; then echo '--draft'; else echo ''; fi)" >> $GITHUB_ENV
 
-      - name: print draft flag
-        run: echo ${{ env.draftflag }}
+      - name: setup force delte flag
+        run: echo "force_delete_old_prs_flag=$(if ${{ github.event.inputs.force_delete_old_prs }}; \
+        then echo '--force-delete-old-prs'; else echo '--no-force-delete-old-prs'; fi)" >> $GITHUB_ENV
 
       - name: create pull request
         id: createpullrequest
@@ -110,15 +111,6 @@ jobs:
           GITHUB_USER_EMAIL: Jawayria
         run: |
           cd $GITHUB_WORKSPACE/testeng-ci
-          echo "draftflag=$(if ${{ inputs.draft }}; then echo '--draft'; else echo ''; fi)" >> $GITHUB_ENV
-
-          if ${{ github.event.inputs.force_delete_old_prs}}
-          then
-             echo "force_delete_old_prs_flag='--force-delete-old-prs'" >> $GITHUB_ENV
-          else
-             echo "force_delete_old_prs_flag='--no-force-delete-old-prs'" >> $GITHUB_ENV
-          fi
-          echo ${{ env.draftflag }}
           python -m jenkins.pull_request_creator --repo-root=$GITHUB_WORKSPACE \
           --target-branch="master" --base-branch-name="${{ github.event.inputs.branch }}" \
           --commit-message="${{ github.event.inputs.commit_message }}" \
