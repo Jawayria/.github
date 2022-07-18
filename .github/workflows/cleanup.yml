@@ -108,7 +108,10 @@ jobs:
 
       - name: check testeng-ci
         run: cat .git/info/exclude
-        
+
+      - name: status
+        run: git status
+
       - name: create pull request
         id: createpullrequest
         env:
