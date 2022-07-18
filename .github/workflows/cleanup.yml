@@ -105,6 +105,9 @@ jobs:
 
       - name: ignore testeng-ci
         run: echo "testeng-ci" >> .git/info/exclude
+
+      - name: check testeng-ci
+        run: cat .git/info/exclude
         
       - name: create pull request
         id: createpullrequest
