@@ -9,7 +9,7 @@ on:
         required: false
         default: openedx
       repos_list:
-        description: "List of repositories where you want to run the job"
+        description: "List of repositories in the format 'x', 'y', 'z'..."
         type: string
         required: true
       python_version:
@@ -47,7 +47,7 @@ on:
         required: false
         default: false
       script:
-        description: "Script to execute on repos"
+        description: "Script"
         type: string
         required: true
 
@@ -100,17 +100,11 @@ jobs:
       - name: setup draft flag
         run: echo "draftflag=$(if ${{ github.event.inputs.draft }}; then echo '--draft'; else echo ''; fi)" >> $GITHUB_ENV
 
-      - name: setup force delte flag
+      - name: setup force delete flag
         run: echo "force_delete_old_prs_flag=$(if ${{ github.event.inputs.force_delete_old_prs }}; then echo '--force-delete-old-prs'; else echo '--no-force-delete-old-prs'; fi)" >> $GITHUB_ENV
 
       - name: ignore testeng-ci
         run: echo "testeng-ci" >> .git/info/exclude
-
-      - name: check testeng-ci
-        run: cat .git/info/exclude
-
-      - name: status
-        run: git status
 
       - name: create pull request
         id: createpullrequest
