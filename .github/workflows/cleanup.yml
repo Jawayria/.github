@@ -6,7 +6,7 @@ on:
       organization:
         description: "Github organization for the listed repos"
         type: string
-        required: false
+        required: true
         default: openedx
       repos_list:
         description: "List of repositories in the format 'x', 'y', 'z'..."
@@ -15,7 +15,7 @@ on:
       python_version:
         description: "Python Version"
         type: string
-        required: false
+        required: true
         default: '3.8'
       packages:
         description: "Space separated list of required packages"
@@ -34,7 +34,7 @@ on:
       branch:
         description: "Branch name"
         type: string
-        required: false
+        required: true
         default: 'cleanup-python-code'
       draft:
         description: "Create draft PR"
