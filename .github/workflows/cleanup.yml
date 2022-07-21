@@ -5,18 +5,25 @@ on:
     inputs:
       organization:
         description: "Github organization for the listed repos"
-        type: string
+        type: choice
         required: true
         default: openedx
+        options:
+          - openedx
+          - edx
       repos_list:
         description: "List of repositories in the format 'x', 'y', 'z'..."
         type: string
         required: true
       python_version:
         description: "Python Version"
-        type: string
+        type: choice
         required: true
         default: '3.8'
+        options:
+          - 2.7
+          - 3.6
+          - 3.8
       packages:
         description: "Space separated list of required packages"
         type: string
@@ -117,5 +124,5 @@ jobs:
           --target-branch="master" --base-branch-name="${{ github.event.inputs.branch }}" \
           --commit-message="${{ github.event.inputs.commit_message }}" \
           --pr-title="${{ github.event.inputs.commit_message }}"  \
-          --pr-body="${{ github.event.inputs.pr_body }}" \
+          --pr-body="${{ github.event.inputs.pr_body }}" --team-reviewers="arbi-bom" \
            ${{ env.force_delete_old_prs_flag }} ${{env.draftflag}}  --untracked-files-required=true
