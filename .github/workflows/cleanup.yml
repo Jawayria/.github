@@ -1,5 +1,4 @@
-name: cleanup
-
+name: Bulk Repo Update
 on:
   workflow_dispatch:
     inputs:
@@ -60,25 +59,25 @@ on:
 
 jobs:
 
-  split_string:
+  repos_list:
     runs-on: ubuntu-20.04
 
     outputs:
-      output1: ${{ steps.split_string.outputs.list }}
+      output1: ${{ steps.repos_list.outputs.list }}
     steps:
 
     - name: get repos list
-      id: split_string
+      id: repos_list
       run: |
         echo "::set-output name=list::[${{github.event.inputs.repos_list}}]"
 
-  cleanup:
+  bulk_update:
     runs-on: ubuntu-20.04
     needs: [ split_string ]
     strategy:
       fail-fast: false
       matrix:
-        repos: ${{fromJson(needs.split_string.outputs.output1)}}
+        repos: ${{fromJson(needs.repos_list.outputs.output1)}}
 
     steps:
       - uses: actions/checkout@v2
