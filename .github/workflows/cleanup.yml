@@ -73,7 +73,7 @@ jobs:
 
   bulk_update:
     runs-on: ubuntu-20.04
-    needs: [ split_string ]
+    needs: [ repos_list ]
     strategy:
       fail-fast: false
       matrix:
